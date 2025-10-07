@@ -1,0 +1,123 @@
+/* CSS: シンプルでモダンなデザイン */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --bg-color: #f8f9fa;
+    --text-color: #333;
+    --border-color: #dee2e6;
+    --card-bg: #fff;
+    --shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 2rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+input[type="url"] {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 0.5rem;
+}
+button:hover {
+    background-color: #0056b3;
+}
+button:disabled {
+    background-color: var(--secondary-color);
+    cursor: not-allowed;
+}
+#results {
+    margin-top: 2rem;
+}
+.status {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+}
+.loading {
+    display: none;
+    color: var(--secondary-color);
+}
+.error {
+    display: none;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.sitemap-list {
+    list-style-type: none;
+    padding-left: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1rem;
+}
+.sitemap-list li {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.sitemap-list li:last-child {
+    border-bottom: none;
+}
+.sitemap-list a {
+    color: var(--primary-color);
+    text-decoration: none;
+    word-break: break-all;
+}
+.sitemap-list a:hover {
+    text-decoration: underline;
+}
+.sitemap-list strong {
+    display: block;
+    font-size: 1.1em;
+    margin-bottom: 0.25rem;
+}
+.info-box {
+    background-color: #d1ecf1;
+    border-left: 5px solid #0c5460;
+    padding: 1rem;
+    margin-top: 2rem;
+    font-size: 0.9em;
+}

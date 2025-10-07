@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サイトマップジェネレータ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>サイトマップジェネレータ</h1>
+        <p>指定したURLのサイト構造を解析し、ページタイトルとURLのリストを生成します。</p>
+
+        <form id="sitemap-form" class="form-group">
+            <label for="url-input">サイトのURLを入力してください</label>
+            <input type="url" id="url-input" placeholder="https://example.com" required>
+            <button type="submit" id="start-button">サイトマップ生成開始</button>
+            <button type="button" id="stop-button" style="display: none;">生成を停止</button>
+        </form>
+
+        <div id="results">
+            <div id="loading" class="status loading">
+                <p>クロール中... サイトの規模によって時間がかかる場合があります。</p>
+            </div>
+            <div id="error" class="status error"></div>
+            <div id="sitemap-container"></div>
+            <button id="download-button" style="display: none;">サイトマップをダウンロード</button>
+        </div>
+        
+        <div class="info-box">
+            <h4>プロキシサーバーの起動方法</h4>
+            <p>このツールは、`http://localhost:3000`で動作している<strong>Node.jsプロキシサーバー</strong>と連携して動作します。使用する前に、下記のコマンドをターミナルで実行してプロキシサーバーを起動してください。</p>
+            <pre><code>node server.js</code></pre>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
