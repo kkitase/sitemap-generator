@@ -1,5 +1,7 @@
 # サイトマップジェネレータ
 
+![スクリーンショット](ss.png)
+
 指定した URL からウェブサイトをクロールし、ページタイトルと URL のリスト形式でサイトマップを生成するツールです。
 
 ## 主な機能
@@ -82,7 +84,7 @@ graph TD
 2.  **プロキシサーバーの起動**:
     次に、プロキシサーバーを起動します。
     ```bash
-   node server.js 
+    node server.js
     ```
     ターミナルに `✅ Proxy server with Puppeteer is running on http://localhost:3000` と表示されれば成功です。
 
