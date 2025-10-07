@@ -1,42 +1,60 @@
 const express = require('express');
-const axios = require('axios');
+const puppeteer = require('puppeteer');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3000; // サーバーを起動するポート番号
+const PORT = 3000;
 
-// CORSミドルウェアを使用して、すべてのオリジンからのリクエストを許可
 app.use(cors());
 
-// '/proxy' というエンドポイント（APIの窓口）を作成
 app.get('/proxy', async (req, res) => {
-    // クエリパラメータから 'url' を取得 (例: /proxy?url=https://example.com)
     const targetUrl = req.query.url;
 
     if (!targetUrl) {
         return res.status(400).send('Error: URL parameter is required.');
     }
 
+    let browser;
     try {
-        // Axiosを使って対象のURLからHTMLコンテンツを取得
-        const response = await axios.get(targetUrl, {
-            headers: {
-                // 'User-Agent' を設定しないと、ボットと判定されてブロックされるサイトがあるため設定を推奨
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-            }
+        // Puppeteerでブラウザを起動
+        browser = await puppeteer.launch({
+            // ヘッドレスモードで実行
+            headless: true,
+            // セキュリティサンドボックスを無効化（環境によっては必要）
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
+
+        const page = await browser.newPage();
+
+        // タイムアウトを60秒に設定
+        await page.setDefaultNavigationTimeout(60000);
+
+        // User-Agentを設定
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36');
+
+        // ページに移動
+        await page.goto(targetUrl, {
+            // ネットワークがアイドル状態になるまで待機
+            waitUntil: 'networkidle2',
+        });
+
+        // ページのHTMLコンテンツを取得
+        const content = await page.content();
         
-        // 取得したHTMLをクライアント（サイトマップジェネレータ）に送信
-        res.send(response.data);
+        // 取得したHTMLをクライアントに送信
+        res.send(content);
 
     } catch (error) {
-        console.error('Error fetching the URL:', error.message);
-        // エラーが発生した場合は、クライアントにもエラー情報を返す
+        console.error(`Error fetching the URL with Puppeteer: ${targetUrl}`, error.message);
         res.status(500).send(`Error fetching the URL: ${error.message}`);
+    } finally {
+        // ブラウザを閉じる
+        if (browser) {
+            await browser.close();
+        }
     }
 });
 
-// 指定したポートでサーバーを起動
 app.listen(PORT, () => {
-    console.log(`✅ Proxy server is running on http://localhost:${PORT}`);
+    console.log(`✅ Proxy server with Puppeteer is running on http://localhost:${PORT}`);
 });
