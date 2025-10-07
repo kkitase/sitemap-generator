@@ -123,7 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         const absoluteUrl = new URL(href, currentUrl).href;
                         const normalizedUrl = absoluteUrl.split('#')[0];
 
-                        if (new URL(normalizedUrl).hostname === domain && !crawled.has(normalizedUrl)) {
+                        // ★変更点: 開始URLの階層配下のみをクロール対象とする
+                        if (
+                            new URL(normalizedUrl).hostname === domain &&
+                            !crawled.has(normalizedUrl) &&
+                            normalizedUrl.startsWith(startUrl)
+                        ) {
                             queue.push(normalizedUrl);
                         }
                     } catch (e) {
